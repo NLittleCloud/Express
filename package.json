@@ -1,21 +1,22 @@
 {
-  "name": "node.project",
+  "name": "LR 8",
   "version": "1.0.0",
-  "description": "LR6 - WEB",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "serve": "nodemon app.js"
+    "serve": "nodemon script.js"
   },
-  "author": "Kuznetsova Veronika",
+  "author": "Veronika",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.22"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "helmet": "^7.0.0",
+    "mongodb": "^5.4.0",
+    "mongoose": "^7.1.1",
     "morgan": "^1.10.0"
   }
 }

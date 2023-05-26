@@ -1,29 +1,22 @@
 const express = require('express');
-const v1_router = require("./router/router");
 const morgan = require("morgan");
-const helmet = require('helmet')
+const dbAPI = require("./controllers/controller");
+const v1_router = require("./router/router");
 
 const HOST = '127.0.0.1';
-const PORT = 8000;
-const app = express();
+const PORT = 5500;
 
-app.use(morgan('tiny'));
-app.use(helmet());
+const app = express();
 app.use(express.static('public'));
 
+app.use(morgan('tiny'));
+app.use('/db', dbAPI);
 app.use('/v1', v1_router);
-
-
-app.use(function(err, req, res, next) {
-
-	if(err.statusCode)
-	{
-		res.status(err.statusCode).json(err.message);
-	}else{
-		res.status(400).json("Отправьте запрос корректно!");
-	}
-});
 
 app.listen(PORT, HOST, () =>{
 	console.log(`Сервер запущен http://${HOST}:${PORT}`);
+});
+
+app.use((req, res, next) =>{
+  res.status(404).send('Такой страницы не существует!');
 });
