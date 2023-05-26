@@ -30,13 +30,16 @@ async function showUser(req, res){
 };
 
 async function findbyidUser(req, res){
-	
 	const id = req.params.id;
-	User.findById(id)
-	.then((result) => {
-		res.status(200).json(result);
-	})
-	.catch((err) => { res.status(404).send("Такого документа не существует");});
+
+  User
+	  .findById(id)
+	  .then((result) => {
+			if(result){
+				res.status(200).json(result);
+			}else res.status(400).json("Такого документа не существует");
+	  })
+	  .catch(err => {res.status(404).send("Неправильное количество символов в id");});
 };
 
 module.exports = {insertUser, showUser, findbyidUser};
