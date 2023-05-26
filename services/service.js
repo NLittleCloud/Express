@@ -7,13 +7,16 @@ const handleError = (res, err) => {
 
 async function insertUser(req, res){
 
-	const user = new User(req.body);
-	user
-		.save()
-		.then(() => {
-			res.status(201).json(`Данные успешно отправлены!`);
-		})
-		.catch((err) => handleError(res, err));
+	if (req.headers['content-type'] === 'application/json'){
+
+		const user = new User(req.body);
+		user
+			.save()
+			.then(() => {
+				res.status(201).json(`Данные успешно отправлены!`);
+			})
+			.catch((err) => handleError(res, err));
+	} else(res.status(400).json("Данные должны быть в формате json"));
 };
 
 async function showUser(req, res){
@@ -33,7 +36,7 @@ async function findbyidUser(req, res){
 	.then((result) => {
 		res.status(200).json(result);
 	})
-	.catch((err) => handleError(res, err));
+	.catch((err) => { res.status(404).send("Такого документа не существует");});
 };
 
 module.exports = {insertUser, showUser, findbyidUser};

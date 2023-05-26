@@ -18,5 +18,5 @@ app.listen(PORT, HOST, () =>{
 });
 
 app.use((req, res, next) =>{
-  res.status(404).send('Такой страницы не существует!');
+  res.status(400).send('Такой страницы не существует!');
 });
