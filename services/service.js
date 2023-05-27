@@ -1,5 +1,4 @@
 const User = require('../models/users');
-const db = require("../configs/config");
 
 const handleError = (res, err) => {
 	res.status(500).send(err.message);
@@ -8,15 +7,14 @@ const handleError = (res, err) => {
 async function insertUser(req, res){
 
 	if (req.headers['content-type'] === 'application/json'){
-
-		const user = new User(req.body);
-		user
-			.save()
-			.then(() => {
-				res.status(201).json(`Данные успешно отправлены!`);
-			})
-			.catch((err) => handleError(res, err));
-	} else(res.status(400).json("Данные должны быть в формате json"));
+	  const user = new User(req.body);
+	  user
+		  .save()
+		  .then(() => {
+			  res.status(201).json(`Данные успешно отправлены!`);
+		  })
+		  .catch((err) => handleError(res, err));
+	} else{res.status(400).json("Данные должны быть в формате json")};
 };
 
 async function showUser(req, res){
@@ -30,9 +28,10 @@ async function showUser(req, res){
 };
 
 async function findbyidUser(req, res){
+	
 	const id = req.params.id;
 
-  User
+	User
 	  .findById(id)
 	  .then((result) => {
 			if(result){

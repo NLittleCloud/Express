@@ -19,11 +19,11 @@ v1_router.get('/stats', (req, res) => {
 });
 
 
-v1_router.get('/', (req, res) => {
+v1_router.get('/comments', (req, res) => {
  	res.send(com);
 });
 
-v1_router.post('/', jsonParser, (req, res) => {
+v1_router.post('/comments', jsonParser, (req, res) => {
 	console.log(req.body);
 	com += JSON.stringify(req.body);
 	res.send('Спасибо, за вашу отзывчивость!');
