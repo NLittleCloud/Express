@@ -17,11 +17,11 @@ function checkApi(req, res, next){
 				next();
 			}else {
 				const error = new Error("Invalid API key");
-           		error.statusCode = 401;
+           		error.statusCode = 400;
             	throw error;
 			}
 		})
-		.catch((err) => {next(err);});//ОШИБКА!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		.catch((err) => {next(err);});
 
 	}catch(err) {
 		next(err);
@@ -38,12 +38,12 @@ async function insertApi(req, res, next){
 			key
 				.save()
 				.then(() => {
-					res.status(201).json(`Ваш apiKey: ${key._id}`);
+					res.status(200).json(`Ваш apiKey: ${key._id}`);
 				})
 				.catch((err) => {next(err);});
 		}else{
 			const error = new Error("Invalid content-type");
-			error.statusCode = 401;
+			error.statusCode = 400;
 			throw error;
 		};
 
@@ -105,7 +105,7 @@ async function findbyidModel(req, res, next){
 					res.status(200).json(result);
 				}else {
 					const error = new Error("Такого документа не существует");
-					error.statusCode = 400;
+					error.statusCode = 404;
 			 		throw error;
 				};
 		  })
@@ -118,21 +118,21 @@ async function findbyidModel(req, res, next){
 
 async function insertModel(req, res, next){
 	try{
-		if (req.headers['content-type'] === 'application/json'){
-			const model = new I_model(req.body);
+			const model = new I_model(
+			{ Uname: req.query.Uname,
+				Mname: req.query.Mname,
+				Mtype: req.query.Mtype,
+				Object: req.query.Object,
+				Owerview: req.query.Owerview,
+				Comment: req.query.Comment
+			});
 
 		 model
 			.save()
 			.then(() => {
-				res.status(201).json(`Данные успешно отправлены!`);
+				res.status(200).json(`Данные успешно отправлены!`);
 			})
 			.catch((err) => {next(err);});
-		} else{
-			const error = new Error("Invalid content-type");
-			error.statusCode = 401;
-			throw error;
-		};
-
 	}catch(err){
 		next(err);
 	}
@@ -140,20 +140,17 @@ async function insertModel(req, res, next){
 
 
 async function updateModel(req, res, next){
-
 	try{
-		if (req.headers['content-type'] === 'application/json'){
 			const ids = new db.Types.ObjectId(`${req.params.id}`);
-			body = req.body;	
 
 			I_model
 				.findByIdAndUpdate(ids, 
-					{ Uname: body.Uname,
-						Mname: body.Mname,
-						Mtype: body.Mtype,
-						Object: body.Object,
-						Owerview: body.Owerview,
-						Comment: body.Comment,
+					{ Uname: req.query.Uname,
+						Mname: req.query.Mname,
+						Mtype: req.query.Mtype,
+						Object: req.query.Object,
+						Owerview: req.query.Owerview,
+						Comment: req.query.Comment,
 						Updatedata: Date.now()})
 
 				.then((result) => {
@@ -166,13 +163,6 @@ async function updateModel(req, res, next){
 					};
 				})
 				.catch((err) => {next(err);});
-			
-		} else{
-			const error = new Error("Invalid content-type");
-			error.statusCode = 401;
-			throw error;
-		};
-
 	}catch(err){
 		next(err);
 	};
