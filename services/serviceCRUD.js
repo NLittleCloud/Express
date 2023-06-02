@@ -1,10 +1,7 @@
 const Key = require('../models/api_keys');
 const I_model = require('../models/info_models');
 const db = require('../configs/config');
-
-const handleError = (res, err) => {
-	res.status(500).send("Ошибка HANDLEERROR");
-}
+const path = require('path')
 
 function checkApi(req, res, next){
 	try{
@@ -38,7 +35,7 @@ async function insertApi(req, res, next){
 			key
 				.save()
 				.then(() => {
-					res.status(200).json(`Ваш apiKey: ${key._id}`);
+					res.status(200).json(`Ваш apiKey: ${key._id}`);	
 				})
 				.catch((err) => {next(err);});
 		}else{
@@ -57,7 +54,6 @@ async function deleteApi(req, res, next){
 
 	try{
 		const ids = new db.Types.ObjectId(`${req.params.id}`);
-
 		Key
 		    .findByIdAndDelete(ids)
 		    .then((result) => {
@@ -82,7 +78,7 @@ async function showModel(req, res, next){
 
 	try{
 		I_model
-		  .find({}, {Uname: 1, Comment: 1})
+		  .find({}, {Mname: 1})
 		  .then((models) => {
 			  res.status(200).json(models);
 		  })
@@ -172,7 +168,7 @@ async function deletebyidModel(req, res, next){
 
 	try{
 		const ids = new db.Types.ObjectId(`${req.params.id}`);
-
+		
 		I_model
 			.findByIdAndDelete(ids)
 			.then((result) => {
@@ -190,4 +186,9 @@ async function deletebyidModel(req, res, next){
 		next(err);
 	};
 };	
-module.exports = {checkApi, insertApi, deleteApi, showModel, findbyidModel, insertModel, updateModel, deletebyidModel };
+
+function sendHTML(req, res, next){
+	res.sendFile(path.join(__dirname, '..', '/public/fetch.html'));
+};
+
+module.exports = {checkApi, insertApi, deleteApi, showModel, findbyidModel, insertModel, updateModel, deletebyidModel, sendHTML};

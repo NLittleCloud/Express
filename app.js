@@ -20,7 +20,6 @@ app.listen(PORT, HOST, () =>{
 	console.log(`Сервер запущен http://${HOST}:${PORT}`);
 });
 
-
 app.use(function (err, req, res, next) {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal server error';

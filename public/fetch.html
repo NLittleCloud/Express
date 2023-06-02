@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../fetch.css">
+    <title>Server Kuznetsova</title>
+</head>
+<body>
+		<h1>Fetch API</h1>
+        <form id = "APIform">
+            <label for="apiKey">ApiKey:</label>
+            <input type="text" placeholder="Your name" id="apiKey" min="24" name="apiKey" required>
+            <button type="submit">Отправить</button>
+        </form>
+
+        <table id="modelTable">
+            <thead>
+                <tr>
+                    <th>Название модели:</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Обновить талицу:</td>
+                    <td><button class = "updatebutton">Обновить</button></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <script src="../fetch.js"></script>
+</body>
+</html>
